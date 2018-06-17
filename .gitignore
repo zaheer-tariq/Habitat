@@ -244,3 +244,4 @@ npm-debug.log
 /gulp-config.js
 /usersettings.ps1
 /src/Project/Habitat/code/App_Config/Environment/Project/Habitat.Dev.config
+/publishsettings.targets
