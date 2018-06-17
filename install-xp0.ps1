@@ -333,13 +333,33 @@ Function ReplaceTokensInFile ($publishRootFolder, $fileName, $hostName)
 Function Create-LocalSettings
 {
 	write-host "Creating local setting files ..................."
+
+	# 1 - User settings
 	Copy-Item usersettings.ps1.example usersettings.ps1
 	. $PSScriptRoot\usersettings.ps1
 	. $PSScriptRoot\settings.ps1
+	
+	# 2 - Gulp Config file
 	Copy-Item gulp-config.js.example gulp-config.js
-	ReplaceTokensInFile ($SitecoreSiteRoot -replace "\\", "\\") "gulp-config.js" ""
+	$filePath = Join-Path $PSScriptRoot "gulp-config.js"
+	$content = [System.IO.File]::ReadAllText($filePath).Replace("{publishRoot}", ($SitecoreSiteRoot -replace "\\", "\\"))
+	[System.IO.File]::WriteAllText($filePath, $content)
+	
+	# 3 - Publish settings
 	Copy-Item publishsettings.targets.example publishsettings.targets
-	ReplaceTokensInFile "" "publishsettings.targets" $SitecoreSiteName
+	$filePath = Join-Path $PSScriptRoot "publishsettings.targets"
+	$content = [System.IO.File]::ReadAllText($filePath).Replace("{publishRoot}", $SitecoreSiteName)
+	[System.IO.File]::WriteAllText($filePath, $content)
+	
+	# 4 - Project environment config
+	$evnConfigRoot = Join-Path $PSScriptRoot "src\Project\Habitat\code\App_Config\Environment\Project"
+	Copy-Item (Join-Path $evnConfigRoot "Habitat.Dev.config.example") (Join-Path $evnConfigRoot "Habitat.Dev.config")
+	
+	$filePath = Join-Path $evnConfigRoot "Habitat.Dev.config"
+	$content = [System.IO.File]::ReadAllText($filePath).Replace("{sourceFolder}", (Join-Path $PSScriptRoot "src"))
+	[System.IO.File]::WriteAllText($filePath, $content)
+	
+	Write-Host "Done creating all local settings and config files....." -ForegroundColor Green	
 }
 
 
