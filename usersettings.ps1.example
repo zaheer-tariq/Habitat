@@ -1,0 +1,14 @@
+# Solution parameters
+$SolutionPrefix = "habitat"
+$SitePostFix = "dev.local"
+$webroot = "C:\inetpub\wwwroot"
+
+# SQL Parameters
+$SqlServer = "."
+$SqlAdminUser = "sa"
+$SqlAdminPassword = "12345"
+
+# Solr Parameters
+$SolrUrl = "https://localhost:8983/solr"
+$SolrRoot = "c:\\solr"
+$SolrService = "Solr"

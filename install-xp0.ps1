@@ -5,8 +5,6 @@
 #####################################################
 $ErrorActionPreference = 'Stop'
 
-. $PSScriptRoot\settings.ps1
-
 Write-Host "*******************************************************" -ForegroundColor Green
 Write-Host " Installing Sitecore $SitecoreVersion" -ForegroundColor Green
 Write-Host " Sitecore: $SitecoreSiteName" -ForegroundColor Green
@@ -323,11 +321,34 @@ function Add-AppPool-Membership {
     }
 }
 
-Install-Prerequisites
-Install-Assets
-Install-XConnect
-Install-Sitecore
-Add-AppPool-Membership
+Function ReplaceTokensInFile ($publishRootFolder, $fileName, $hostName) 
+{
+	$filePath = Join-Path $PSScriptRoot $fileName
+	Write-Host $filePath
+	$content = [System.IO.File]::ReadAllText($filePath).Replace("{publishRoot}",$publishRootFolder).Replace("{hostName}",$hostName)
+	[System.IO.File]::WriteAllText($filePath, $content)
+}
+
+
+Function Create-LocalSettings
+{
+	write-host "Creating local setting files ..................."
+	Copy-Item usersettings.ps1.example usersettings.ps1
+	. $PSScriptRoot\usersettings.ps1
+	. $PSScriptRoot\settings.ps1
+	Copy-Item gulp-config.js.example gulp-config.js
+	ReplaceTokensInFile ($SitecoreSiteRoot -replace "\\", "\\") "gulp-config.js" ""
+	Copy-Item publishsettings.targets.example publishsettings.targets
+	ReplaceTokensInFile "" "publishsettings.targets" $SitecoreSiteName
+}
+
+
+Create-LocalSettings
+#Install-Prerequisites
+#Install-Assets
+#Install-XConnect
+#Install-Sitecore
+#Add-AppPool-Membership
 
 
 # TODO: 
