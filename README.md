@@ -17,9 +17,6 @@ This respositroy allow you to Install Sitecore 9 in custom directory i.e. at you
 * Copy "license.xml" to `.\build\assets` folder.
 * Copy and rename `usersettings.ps1.example` to `usersettings.ps1` and check/update settings in `usersettings.ps1`
 * Open powershell in administrator mode and run `.\install-xp0.ps1`
-* Run `npm install`
-* Run `npm install -g gulp`
-* Run `gulp default`
 
 For getting started, please check out the [Documentation](./docs).  
 For more information on **Helix**, please go to [helix.sitecore.net](http://helix.sitecore.net).

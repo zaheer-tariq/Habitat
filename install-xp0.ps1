@@ -363,6 +363,12 @@ Function Create-LocalSettings
 	Write-Host "Done creating all local settings and config files....." -ForegroundColor Green	
 }
 
+Function Run-Scripts
+{
+    iex 'npm install --force'	
+    iex 'npm install -g gulp'	
+    iex 'gulp default'
+}
 
 Create-LocalSettings
 Install-Prerequisites
@@ -370,7 +376,7 @@ Install-Assets
 Install-XConnect
 Install-Sitecore
 Add-AppPool-Membership
-
+Run-Scripts
 
 # TODO: 
 # Run optimization scripts
