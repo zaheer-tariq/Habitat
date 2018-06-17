@@ -8,5 +8,15 @@ The architecture and methodology focuses on:
 * Flexibility - *Change and add quickly and without worry*
 * Extensibility - *Simply add new features without steep learning curve*
 
+# Installation
+
+This respositroy allow you to Install Sitecore at your desired location. Please follow these simple instructions to get started
+
+* Clone or download this respositroy.
+* Download and extract Sitecore 9 "Packages for XP Single" from [dev.sitecore.net](https://dev.sitecore.net/Downloads.aspx) in the `.\build\assets` folder
+* Copy "license.xml" to `.\build\assets` folder.
+* Copy and rename `usersettings.ps1.example` to `usersettings.ps1`
+* Open powershell in administrator mode and run `.\install-xp0.ps1`
+
 For getting started, please check out the [Documentation](./docs).  
 For more information on **Helix**, please go to [helix.sitecore.net](http://helix.sitecore.net).

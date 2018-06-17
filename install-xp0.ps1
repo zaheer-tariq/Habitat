@@ -5,7 +5,6 @@
 #####################################################
 $ErrorActionPreference = 'Stop'
 
-Copy-Item usersettings.ps1.example usersettings.ps1
 . $PSScriptRoot\usersettings.ps1
 . $PSScriptRoot\settings.ps1
 
