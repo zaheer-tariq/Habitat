@@ -4,6 +4,7 @@
 # 
 #####################################################
 $ErrorActionPreference = "Stop"
+. $PSScriptRoot\usersettings.ps1
 . $PSScriptRoot\settings.ps1
 
 Write-Host "*******************************************************" -ForegroundColor Green

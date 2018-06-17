@@ -10,11 +10,15 @@
         "SiteName": {
             "Type": "string",
             "Description": "The name of the site to be deployed."
+        },
+        "InstallationPath": {
+            "Type": "string",
+            "Description": "The path to the folder where Xconnect will be installed"
         }
     },
     "Variables": {
         // The sites full path on disk
-        "Site.PhysicalPath": "[joinpath(environment('SystemDrive'), 'inetpub', 'wwwroot', parameter('SiteName'))]",
+        "Site.PhysicalPath": "[parameter('InstallationPath')]",
         "Site.DataFolder": "[joinpath(variable('Site.PhysicalPath'), 'App_Data')]"
     },
     "Tasks": {

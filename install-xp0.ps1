@@ -5,6 +5,10 @@
 #####################################################
 $ErrorActionPreference = 'Stop'
 
+Copy-Item usersettings.ps1.example usersettings.ps1
+. $PSScriptRoot\usersettings.ps1
+. $PSScriptRoot\settings.ps1
+
 Write-Host "*******************************************************" -ForegroundColor Green
 Write-Host " Installing Sitecore $SitecoreVersion" -ForegroundColor Green
 Write-Host " Sitecore: $SitecoreSiteName" -ForegroundColor Green
@@ -208,6 +212,7 @@ function Install-XConnect {
                                       -LicenseFile $LicenseFile `
                                       -SiteName $XConnectSiteName `
                                       -XConnectCert $XConnectCert `
+									  -InstallationPath $XConnectSiteRoot `
                                       -SqlDbPrefix $SolutionPrefix `
                                       -SolrCorePrefix $SolutionPrefix `
                                       -SqlAdminUser $SqlAdminUser `
@@ -267,6 +272,7 @@ function Install-Sitecore {
                                       -LicenseFile $LicenseFile `
                                       -SiteName $SitecoreSiteName `
                                       -XConnectCert $XConnectCert `
+									  -InstallationPath $SitecoreSiteRoot `
                                       -SqlDbPrefix $SolutionPrefix `
                                       -SolrCorePrefix $SolutionPrefix `
                                       -SqlAdminUser $SqlAdminUser `
@@ -288,6 +294,7 @@ function Install-Sitecore {
     {
         #Set web certificate on Sitecore site
         Install-SitecoreConfiguration $SitecoreSSLConfiguration `
+									  -InstallationPath $SitecoreSiteRoot `
                                       -SiteName $SitecoreSiteName
     }
     catch
@@ -333,25 +340,20 @@ Function ReplaceTokensInFile ($publishRootFolder, $fileName, $hostName)
 Function Create-LocalSettings
 {
 	write-host "Creating local setting files ..................."
-
-	# 1 - User settings
-	Copy-Item usersettings.ps1.example usersettings.ps1
-	. $PSScriptRoot\usersettings.ps1
-	. $PSScriptRoot\settings.ps1
 	
-	# 2 - Gulp Config file
+	# 1 - Gulp Config file
 	Copy-Item gulp-config.js.example gulp-config.js
 	$filePath = Join-Path $PSScriptRoot "gulp-config.js"
 	$content = [System.IO.File]::ReadAllText($filePath).Replace("{publishRoot}", ($SitecoreSiteRoot -replace "\\", "\\"))
 	[System.IO.File]::WriteAllText($filePath, $content)
 	
-	# 3 - Publish settings
+	# 2 - Publish settings
 	Copy-Item publishsettings.targets.example publishsettings.targets
 	$filePath = Join-Path $PSScriptRoot "publishsettings.targets"
 	$content = [System.IO.File]::ReadAllText($filePath).Replace("{publishRoot}", $SitecoreSiteName)
 	[System.IO.File]::WriteAllText($filePath, $content)
 	
-	# 4 - Project environment config
+	# 3 - Project environment config
 	$evnConfigRoot = Join-Path $PSScriptRoot "src\Project\Habitat\code\App_Config\Environment\Project"
 	Copy-Item (Join-Path $evnConfigRoot "Habitat.Dev.config.example") (Join-Path $evnConfigRoot "Habitat.Dev.config")
 	
@@ -364,11 +366,11 @@ Function Create-LocalSettings
 
 
 Create-LocalSettings
-#Install-Prerequisites
-#Install-Assets
-#Install-XConnect
-#Install-Sitecore
-#Add-AppPool-Membership
+Install-Prerequisites
+Install-Assets
+Install-XConnect
+Install-Sitecore
+Add-AppPool-Membership
 
 
 # TODO: 
