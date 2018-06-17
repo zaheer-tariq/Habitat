@@ -349,7 +349,7 @@ Function Create-LocalSettings
 	# 2 - Publish settings
 	Copy-Item publishsettings.targets.example publishsettings.targets
 	$filePath = Join-Path $PSScriptRoot "publishsettings.targets"
-	$content = [System.IO.File]::ReadAllText($filePath).Replace("{publishRoot}", $SitecoreSiteName)
+	$content = [System.IO.File]::ReadAllText($filePath).Replace("{hostName}", $SitecoreSiteName)
 	[System.IO.File]::WriteAllText($filePath, $content)
 	
 	# 3 - Project environment config
