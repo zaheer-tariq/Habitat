@@ -15,7 +15,7 @@ This respositroy allow you to Install Sitecore 9 in custom directory i.e. at you
 * Clone or download this respositroy.
 * Download and extract Sitecore 9 "Packages for XP Single" from [dev.sitecore.net](https://dev.sitecore.net/Downloads.aspx) in the `.\build\assets` folder
 * Copy "license.xml" to `.\build\assets` folder.
-* Copy and rename `usersettings.ps1.example` to `usersettings.ps1`
+* Copy and rename `usersettings.ps1.example` to `usersettings.ps1` and check/update settings in `usersettings.ps1`
 * Open powershell in administrator mode and run `.\install-xp0.ps1`
 
 For getting started, please check out the [Documentation](./docs).  
