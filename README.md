@@ -10,7 +10,7 @@ The architecture and methodology focuses on:
 
 # Installation
 
-This respositroy allow you to Install Sitecore at your desired location. Please follow these simple instructions to get started
+This respositroy allow you to Install Sitecore 9 in custom directory i.e. at your desired location. Please follow these simple instructions to get started
 
 * Clone or download this respositroy.
 * Download and extract Sitecore 9 "Packages for XP Single" from [dev.sitecore.net](https://dev.sitecore.net/Downloads.aspx) in the `.\build\assets` folder
